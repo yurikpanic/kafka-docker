@@ -1,0 +1,25 @@
+version: '2'
+services:
+  zoo:
+    image: zookeeper:3.4
+    restart: unless-stopped
+    ports:
+      - 2181
+  kafka1:
+    image: kafka-docker
+    restart: unless-stopped
+    depends_on:
+      - zoo
+    environment:
+      KAFKA_BROKER_ID: 0
+      KAFKA_ZOOKEEPER_CONNECT: zoo:2181/kafka
+  kafka2:
+    image: kafka-docker
+    restart: unless-stopped
+    depends_on:
+      - zoo
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zoo:2181/kafka
+      
+      
