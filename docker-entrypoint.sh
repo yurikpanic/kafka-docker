@@ -9,7 +9,6 @@ if [ "$1" = 'kafka-server-start.sh' -a "$(id -u)" = '0' ]; then
 fi
 
 echo "broker.id=$KAFKA_BROKER_ID" >> $KAFKA_CONFIG
-echo "listeners=$KAFKA_LISTENERS" >> $KAFKA_CONFIG
 if [ ! -z $KAFKA_ADVERTISED_LISTENERS ]; then
     echo "advertised.listeners=$KAFKA_ADVERTISED_LISTENERS" >> $KAFKA_CONFIG
 fi
