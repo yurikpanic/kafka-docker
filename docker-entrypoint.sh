@@ -18,4 +18,9 @@ echo "log.retention.hours=$KAFKA_LOG_RETENTION_HOURS" >> $KAFKA_CONFIG
 echo "log.segment.bytes=$KAFKA_LOG_SEGMENT_BYTES" >> $KAFKA_CONFIG
 echo "zookeeper.connect=$KAFKA_ZOOKEEPER_CONNECT" >> $KAFKA_CONFIG
 
+# redirect all logs to console
+sed -e 's/DailyRollingFileAppender/ConsoleAppender/g' /$KAFKA_DISTR/config/log4j.properties > /$KAFKA_DISTR/config/log4j-console-only.properties
+export KAFKA_LOG4J_OPTS="-Dlog4j.configuration=file:/$KAFKA_DISTR/config/log4j-console-only.properties"
+export KAFKA_GC_LOG_OPTS="-verbose:gc -XX:+PrintGCDetails -XX:+PrintGCDateStamps -XX:+PrintGCTimeStamps "
+
 exec kafka-server-start.sh $KAFKA_CONFIG
