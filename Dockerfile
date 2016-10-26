@@ -6,10 +6,6 @@ RUN apk add --no-cache \
 
 ENV KAFKA_USER=kafka \
     KAFKA_DATA=/kafka-logs \
-    KAFKA_BROKER_ID="" \
-    KAFKA_ADVERTISED_LISTENERS="" \
-    KAFKA_LOG_RETENTION_HOURS="" \
-    KAFKA_LOG_SEGMENT_BYTES="" \
     KAFKA_ZOOKEEPER_CONNECT=zoo:2181/kafka
 
 RUN set -x \
