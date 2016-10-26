@@ -78,6 +78,14 @@ Kafka's `log.retention.hours` parameter.
 
 Kafka's `log.segment.bytes` parameter.
 
+### `KAFKA_NUM_PARTITIONS`
+
+Kafka's `num.partitions` parameter.
+
+### `KAFKA_DEFAULT_REPLICATION_FACTOR`
+
+Kafka's `default.replication.factor` parameter.
+
 ### `KAFKA_ADVERTISED_LISTENERS`
 
 No default value, container hostname will be used. Kafka's `advertised.listeners` parameter.

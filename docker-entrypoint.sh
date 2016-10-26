@@ -16,6 +16,13 @@ if [ ! -f $KAFKA_CONFIG ]; then
     if [ ! -z $KAFKA_LOG_SEGMENT_BYTES ]; then
         echo "log.segment.bytes=$KAFKA_LOG_SEGMENT_BYTES" >> $KAFKA_CONFIG
     fi
+    if [ ! -z $KAFKA_NUM_PARTITIONS ]; then
+        echo "num.partitions=$KAFKA_NUM_PARTITIONS" >> $KAFKA_CONFIG
+    fi
+    if [ ! -z $KAFKA_DEFAULT_REPLICATION_FACTOR ]; then
+        echo "default.replication.factor=$KAFKA_DEFAULT_REPLICATION_FACTOR" >> $KAFKA_CONFIG
+    fi
+
     echo "zookeeper.connect=$KAFKA_ZOOKEEPER_CONNECT" >> $KAFKA_CONFIG
 fi
 
