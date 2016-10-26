@@ -2,20 +2,22 @@
 
 set -e
 
-# Allow the container to be started with `--user`
-if [ "$1" = 'kafka-server-start.sh' -a "$(id -u)" = '0' ]; then
-    chown -R "$KAFKA_USER" "$KAFKA_DATA" "/$KAFKA_DISTR"
-    exec su-exec "$KAFKA_USER" "$0" "$@"
+if [ ! -f $KAFKA_CONFIG ]; then
+    if [ ! -z $KAFKA_BROKER_ID ]; then
+        echo "broker.id=$KAFKA_BROKER_ID" >> $KAFKA_CONFIG
+    fi
+    if [ ! -z $KAFKA_ADVERTISED_LISTENERS ]; then
+        echo "advertised.listeners=$KAFKA_ADVERTISED_LISTENERS" >> $KAFKA_CONFIG
+    fi
+    echo "log.dirs=$KAFKA_DATA" >> $KAFKA_CONFIG
+    if [ ! -z $KAFKA_LOG_RETENTION_HOURS ]; then
+        echo "log.retention.hours=$KAFKA_LOG_RETENTION_HOURS" >> $KAFKA_CONFIG
+    fi
+    if [ ! -z $KAFKA_LOG_SEGMENT_BYTES ]; then
+        echo "log.segment.bytes=$KAFKA_LOG_SEGMENT_BYTES" >> $KAFKA_CONFIG
+    fi
+    echo "zookeeper.connect=$KAFKA_ZOOKEEPER_CONNECT" >> $KAFKA_CONFIG
 fi
-
-echo "broker.id=$KAFKA_BROKER_ID" >> $KAFKA_CONFIG
-if [ ! -z $KAFKA_ADVERTISED_LISTENERS ]; then
-    echo "advertised.listeners=$KAFKA_ADVERTISED_LISTENERS" >> $KAFKA_CONFIG
-fi
-echo "log.dirs=$KAFKA_DATA" >> $KAFKA_CONFIG
-echo "log.retention.hours=$KAFKA_LOG_RETENTION_HOURS" >> $KAFKA_CONFIG
-echo "log.segment.bytes=$KAFKA_LOG_SEGMENT_BYTES" >> $KAFKA_CONFIG
-echo "zookeeper.connect=$KAFKA_ZOOKEEPER_CONNECT" >> $KAFKA_CONFIG
 
 # redirect all logs to console
 sed -e 's/DailyRollingFileAppender/ConsoleAppender/g' /$KAFKA_DISTR/config/log4j.properties > /$KAFKA_DISTR/config/log4j-console-only.properties

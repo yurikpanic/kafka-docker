@@ -2,15 +2,14 @@ FROM openjdk:8-jre-alpine
 MAINTAINER Iurii Vyshnevskyi <vishnevsky@gmail.com>
 
 RUN apk add --no-cache \
-    bash \
-    su-exec
+    bash
 
 ENV KAFKA_USER=kafka \
     KAFKA_DATA=/kafka-logs \
-    KAFKA_BROKER_ID=0 \
+    KAFKA_BROKER_ID="" \
     KAFKA_ADVERTISED_LISTENERS="" \
-    KAFKA_LOG_RETENTION_HOURS=168 \
-    KAFKA_LOG_SEGMENT_BYTES=1073741824 \
+    KAFKA_LOG_RETENTION_HOURS="" \
+    KAFKA_LOG_SEGMENT_BYTES="" \
     KAFKA_ZOOKEEPER_CONNECT=zoo:2181/kafka
 
 RUN set -x \
@@ -21,7 +20,7 @@ RUN set -x \
 ARG KAFKA_VERSION=0.10.1.0
 ARG KAFKA_SCALA_VERSION=2.11
 ENV KAFKA_DISTR=kafka_$KAFKA_SCALA_VERSION-$KAFKA_VERSION
-ENV KAFKA_CONFIG="/$KAFKA_DISTR/config/server.properties"
+ENV KAFKA_CONFIG="/$KAFKA_DISTR/config/kafka-docker-server.properties"
 
 RUN set -x \
     && wget -q "http://www.apache.org/dist/kafka/$KAFKA_VERSION/$KAFKA_DISTR.tgz" \
