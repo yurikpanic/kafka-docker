@@ -27,7 +27,10 @@ if [ ! -f $KAFKA_CONFIG ]; then
 fi
 
 # redirect all logs to console
-sed -e 's/DailyRollingFileAppender/ConsoleAppender/g' /$KAFKA_DISTR/config/log4j.properties > /$KAFKA_DISTR/config/log4j-console-only.properties
+sed -e 's/DailyRollingFileAppender/ConsoleAppender/g' \
+    -e 's/TRACE/INFO/g' \
+    -e 's/DEBUG/INFO/g' \
+    /$KAFKA_DISTR/config/log4j.properties > /$KAFKA_DISTR/config/log4j-console-only.properties
 export KAFKA_LOG4J_OPTS="-Dlog4j.configuration=file:/$KAFKA_DISTR/config/log4j-console-only.properties"
 # override gc log settings in kafka-run-class.sh
 export KAFKA_GC_LOG_OPTS="-Dnot.used=42"
