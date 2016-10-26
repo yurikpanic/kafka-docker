@@ -29,6 +29,7 @@ fi
 # redirect all logs to console
 sed -e 's/DailyRollingFileAppender/ConsoleAppender/g' /$KAFKA_DISTR/config/log4j.properties > /$KAFKA_DISTR/config/log4j-console-only.properties
 export KAFKA_LOG4J_OPTS="-Dlog4j.configuration=file:/$KAFKA_DISTR/config/log4j-console-only.properties"
-export KAFKA_GC_LOG_OPTS="-verbose:gc -XX:+PrintGCDetails -XX:+PrintGCDateStamps -XX:+PrintGCTimeStamps "
+# override gc log settings in kafka-run-class.sh
+export KAFKA_GC_LOG_OPTS="-Dnot.used=42"
 
 exec kafka-server-start.sh $KAFKA_CONFIG
