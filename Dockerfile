@@ -2,7 +2,8 @@ FROM openjdk:8-jre-alpine
 MAINTAINER Iurii Vyshnevskyi <vishnevsky@gmail.com>
 
 RUN apk add --no-cache \
-    bash
+    bash \
+    su-exec
 
 ENV KAFKA_USER=kafka \
     KAFKA_DATA=/kafka-logs \

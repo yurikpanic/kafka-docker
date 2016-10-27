@@ -2,6 +2,10 @@
 
 set -e
 
+if [ "$(id -u)" = '0' ]; then
+    exec su-exec "$KAFKA_USER" "$0" "$@"
+fi
+
 if [ ! -f $KAFKA_CONFIG ]; then
     if [ ! -z $KAFKA_BROKER_ID ]; then
         echo "broker.id=$KAFKA_BROKER_ID" >> $KAFKA_CONFIG
